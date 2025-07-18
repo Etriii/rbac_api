@@ -4,8 +4,8 @@ from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from app.db import create_db_and_tables, drop_all_tables_in_db
 
-# from app.routers import (
-# )
+from app.routers import user_routes
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -20,20 +20,19 @@ async def lifespan(app: FastAPI):
 
     print("Disconnecting from DB...")
 
+
 version = "v1"
 
-app = FastAPI(lifespan=lifespan,
-              title="API NP",
-              description="An API for Secret",
-              version=version
-              )
+app = FastAPI(
+    lifespan=lifespan, title="API NP", description="An API for Secret", version=version
+)
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:57023",#for flutter, port must be 57023
-        "http://127.0.0.1:8000",#for pythons fastapi
-        "http://localhost:3000",#for nextjs
+        "http://localhost:57023",  # for flutter, port must be 57023
+        "http://127.0.0.1:8000",  # for pythons fastapi
+        "http://localhost:3000",  # for nextjs
     ],
     allow_credentials=True,
     allow_methods=["*"],  # Allows all HTTP methods
@@ -66,5 +65,7 @@ async def root():
     </html>
     """
 
+
 router = APIRouter()
 app.include_router(router)
+app.include_router(user_routes.router, prefix=f"/api/{version}/users")
