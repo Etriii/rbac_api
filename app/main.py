@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from app.db import create_db_and_tables, drop_all_tables_in_db
 
-from app.routers import user_routes
+from app.routers import user_routes, auth_routers
 
 
 @asynccontextmanager
@@ -69,3 +69,4 @@ async def root():
 router = APIRouter()
 app.include_router(router)
 app.include_router(user_routes.router, prefix=f"/api/{version}/users")
+app.include_router(auth_routers.router, prefix=f"/api/{version}")
