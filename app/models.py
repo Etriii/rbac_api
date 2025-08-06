@@ -15,8 +15,8 @@ class Roles(SQLModel, table=True):
         default=None, sa_column=Column(DateTime, nullable=True)
     )
     updated_by: int = Field(foreign_key="users.id", index=True, nullable=True)
-    
-    
+
+
 class User(SQLModel, table=True):
     __tablename__ = "users"
     id: int = Field(default=None, primary_key=True)
@@ -45,4 +45,9 @@ class UserRoles(SQLModel, table=True):
         default=None, sa_column=Column(DateTime, nullable=True)
     )
     updated_by: int = Field(foreign_key="users.id", index=True, nullable=True)
-    
+
+
+class LotsOfDataForPagination(SQLModel, table=True):
+    _tablename_ = "lots_of_data_for_pagination"
+    id: int = Field(default=None, primary_key=True)
+    name: str = Field(sa_column=Column(String(100)))
