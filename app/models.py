@@ -51,3 +51,4 @@ class LotsOfDataForPagination(SQLModel, table=True):
     _tablename_ = "lots_of_data_for_pagination"
     id: int = Field(default=None, primary_key=True)
     name: str = Field(sa_column=Column(String(100)))
+    created_at: datetime = Field(default_factory=datetime.now)
